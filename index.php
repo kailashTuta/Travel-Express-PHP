@@ -19,7 +19,7 @@
 <body>
     <?php include "header.php" ?>
     <?php include "imageslider.php" ?>
-    <?php include "tours.php" ?>
+    <?php include "tourPackages.php" ?>
     <?php include "footer.php" ?>
 </body>
 
