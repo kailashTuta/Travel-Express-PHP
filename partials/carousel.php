@@ -1,4 +1,4 @@
-<div id="carouselControls" class="carousel slide" data-ride="carousel">
+<div id="carouselControls" class="carousel slide custom-carousel" data-ride="carousel">
     <ol class="carousel-indicators">
         <li data-target="#carouselControls" data-slide-to="0" class="active"></li>
         <li data-target="#carouselControls" data-slide-to="1"></li>
@@ -7,7 +7,7 @@
     <div class="carousel-inner">
         <div class="carousel-item active">
             <div class="overlay"></div>
-            <img src="./images/carousel-images/img-1.jpg" class="d-block w-100 h-100" alt="First Slide">
+            <img src="images/carousel-images/img-1.jpg" class="d-block w-100 h-100" alt="First Slide">
             <div class="carousel-caption d-none d-md-block">
                 <h2 class="animate__animated animate__fadeInUp">Travel Express</h2>
                 <p class="animate__animated animate__fadeInDown">Pack your bags. We’re going on vacation!</p>
@@ -15,11 +15,18 @@
         </div>
         <div class="carousel-item">
             <div class="overlay"></div>
-            <img src="./images/carousel-images/img-2.jpg" class="d-block w-100 h-100" alt="Second Slide">
+            <img src="images/carousel-images/img-2.jpg" class="d-block w-100 h-100" alt="Second Slide">
+            <div class="carousel-caption d-none d-md-block">
+                <h2 class="animate__animated animate__fadeInUp font-weight-normal">Better Prices Exceptional People.
+                </h2>
+            </div>
         </div>
         <div class="carousel-item">
             <div class="overlay"></div>
-            <img src="./images/carousel-images/img-3.jpg" class="d-block w-100 h-100" alt="Third Slide">
+            <img src="images/carousel-images/img-3.jpg" class="d-block w-100 h-100" alt="Third Slide">
+            <div class="carousel-caption d-none d-md-block">
+                <h2 class="animate__animated animate__fadeInUp font-weight-normal">One Agency Many Worlds.</h2>
+            </div>
         </div>
     </div>
     <a class="carousel-control-prev" href="#carouselControls" role="button" data-slide="prev">

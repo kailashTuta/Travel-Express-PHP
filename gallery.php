@@ -26,9 +26,7 @@
 
 <body>
     <?php include "./partials/navbar.php" ?>
-    <?php include "./partials/carousel.php" ?>
-    <?php include "./partials/tourPackages.php" ?>
-    <?php include "./partials/testimonials.php" ?>
+    <?php include "./partials/gallerySection.php" ?>
     <?php include "./partials/footer.php" ?>
 
 

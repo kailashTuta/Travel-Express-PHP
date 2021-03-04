@@ -2,6 +2,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    scroll-behavior: smooth;
 }
 
 body, html {
@@ -9,47 +10,83 @@ body, html {
     width: 100%;
 }
 
-#socialnetwork i {
-    padding-left: 15px;
-    padding-right: 20px;
-    border: 15px;
+hr {
+    width: 130px;
+    height: 2px;
 }
 
-#socialnetwork {
-    background: #25291C;
-    padding: 10px;
+a {
+    text-decoration: none !important;
 }
 
-#PackageHeading {
+.navbar>.nav-item>.nav-link:hover {
+    color: #4BC0D9
+}
+
+.navbar-brand>.navbar-text:hover {
+    color: #4BC0D9
+}
+
+.dropdown-toggle::after {
+    content: none;
+}
+
+.dropdown-menu {
+    min-width: 0;
+}
+
+.dropdown-menu .dropdown-item {
+    white-space: normal;
+}
+
+#premiumPackage>h1 {
     text-transform: uppercase;
     text-align: center;
     font-weight: 600;
     letter-spacing: 2px;
 }
 
+.custom-carousel {
+    position: relative;
+}
+
+.overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background-color: #080d15;
+    opacity: .5;
+}
+
 .carousel-item {
     height: 60vh;
 }
 
-.carousel-indicators li {
+#carouselControls .carousel-indicators li {
     width: 10px;
     height: 10px;
     border-radius: 100%;
+    background-color: #4BC0D9;
 }
 
-.carousel-caption>h2 {
+.carousel-indicators li {
+    background-color: #4BC0D9;
+}
+
+#carouselControls .carousel-caption>h2 {
     animation-delay: 1s;
 }
 
-.carousel-caption>p {
+#carouselControls .carousel-caption>p {
     animation-delay: 1s;
 }
 
-.carousel-caption {
+#carouselControls .carousel-caption {
     padding-bottom: 180px;
 }
 
-.carousel-caption h2 {
+#carouselControls .carousel-caption h2 {
     font-size: 50px;
     text-transform: uppercase;
 }
@@ -101,4 +138,148 @@ body, html {
     opacity: 1;
     transform: translate(0, -50%);
     transition-delay: .3s;
+}
+
+.testimonials {
+    margin: 50px auto;
+}
+
+.testimonials h1 {
+    text-align: center;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.testimonials .row {
+    margin-top: 30px;
+}
+
+.testimonials .row .col-md-4 {
+    margin: 40px auto;
+}
+
+.profile {
+    padding: 70px 10px 10px;
+    background-color: #efefef;
+}
+
+.profile img {
+    top: -60px;
+    position: absolute;
+    left: calc(50% - 60px);
+    border: 10px solid white;
+}
+
+.user {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%
+}
+
+.profile h3 {
+    font-size: 20px;
+    margin-top: 15px;
+    color: #4BC0D9;
+}
+
+blockquote {
+    font-size: 16px;
+    line-height: 30px;
+    quotes: "\201C""\201D""\2018""\2019";
+}
+
+blockquote::before {
+    content: open-quote;
+    font-size: 50px;
+    position: relative;
+    color: #4BC0D9;
+    line-height: 20px;
+    bottom: -15px;
+    right: 5px;
+}
+
+blockquote::after {
+    content: close-quote;
+    font-size: 50px;
+    position: relative;
+    color: #4BC0D9;
+    line-height: 10px;
+    bottom: -15px;
+    left: 5px;
+}
+
+.profile:hover {
+    box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: .5s;
+}
+
+.copyright {
+    background-color: #202020;
+}
+
+.gallery-section {
+    width: 100%;
+    padding: 60px 0;
+}
+
+.inner-width {
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+.gallery-section h1 {
+    text-align: center;
+    text-transform: uppercase;
+    color: #333
+}
+
+.border {
+    height: 4px;
+    width: 180px;
+    background: #4BC0D9;
+    margin: 20px auto
+}
+
+.gallery-section .gallery {
+    display: flex;
+    flex-wrap: wrap-reverse;
+    justify-content: center;
+}
+
+.gallery-section .image {
+    flex: 25%;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.gallery-section .image img {
+    width: 100%;
+    height: 100%;
+    transform: 0.4s
+}
+
+.gallery-section .image img:hover {
+    transform: scale(1.4) rotate(15deg);
+}
+
+@media screen and (max-width:768px) {
+    .gallery-section .image {
+        flex: 50%
+    }
+}
+
+@media screen and (max-width:960px) {
+    .gallery-section .image {
+        flex: 33.33%
+    }
+}
+
+@media screen and (max-width:480px) {
+    .gallery-section .image {
+        flex: 100%
+    }
 }
