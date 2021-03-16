@@ -1,9 +1,14 @@
 <?php
 
-include "loginValidation.php";
-
+session_start();
+if (isset($_SESSION['role'])) {
+    if ($_SESSION['role'] != 'user') {
+        header("Location:../admin/adminDashboard.php");
+    }
+} else {
+    header("location:../login.php");
+}
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,7 +26,7 @@ include "loginValidation.php";
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
 
     <!-- CSS -->
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
     <!-- JavaScript -->
@@ -31,31 +36,8 @@ include "loginValidation.php";
 </head>
 
 <body>
-    <?php include "./partials/navbar.php" ?>
-    <div class="bg">
-        <section class="container-fluid">
-            <section class="row justify-content-center">
-                <section class="col-12 col-sm-6 col-md-4">
-                    <form class="form-container" action="loginValidation.php" method="POST">
-                        <div class="form-group">
-                            <label for="email">Email address</label>
-                            <input type="email" class="form-control" name="email">
-                            <small class="form-text text-muted">We'll never share your email with anyone
-                                else.</small>
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" class="form-control" name="password">
-                        </div>
-                        <div class="alert alert-danger" role="alert">
-                            <b><?php echo $message; ?></b>
-                        </div>
-                        <button type="submit" name="login" class="btn btn-info btn-block">Login</button>
-                    </form>
-                </section>
-            </section>
-        </section>
-    </div>
+    <?php include "../partials/navbar.php" ?>
+    <h2>Welcome <?php echo $_SESSION['User']; ?></h2>
 </body>
 
 </html>
