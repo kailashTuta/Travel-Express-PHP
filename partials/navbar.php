@@ -25,9 +25,9 @@
                     <span><i class="fas fa-chevron-circle-down"></i></span>
                 </a>
                 <div class="dropdown-menu bg-dark" aria-labelledby="dropdown_target">
-                    <a href="" class="dropdown-item text-info">Login</a>
+                    <a href="login.php" class="dropdown-item text-info">Login</a>
                     <div class="dropdown-divider"></div>
-                    <a href="" class="dropdown-item text-info">Register</a>
+                    <a href="register.php" class="dropdown-item text-info">Register</a>
                 </div>
             </li>
         </ul>
