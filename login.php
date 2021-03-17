@@ -1,6 +1,39 @@
 <?php
 
-include "loginValidation.php";
+session_start();
+include "DBConnect.php";
+$message = "";
+if (isset($_POST["login"])) {
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+
+    $sql = "SELECT * FROM users WHERE email=? AND password=?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('ss', $email, $password);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if (mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            if ($row["role_as"] == "admin") {
+                $_SESSION['is_login'] = true;
+                $_SESSION['name'] = $row['name'];
+                $_SESSION['User'] = $row["email"];
+                $_SESSION['role'] = $row['role_as'];
+                header("location:./admin/adminDashboard.php");
+            } else {
+                $_SESSION['is_login'] = true;
+                $_SESSION['name'] = $row['name'];
+                $_SESSION['User'] = $row["email"];
+                $_SESSION['role'] = $row['role_as'];
+                header("location:./user/userDashboard.php");
+            }
+        }
+    } else {
+        $message = "Invalid Credentials";
+        // header("location: login.php");
+    }
+}
 
 ?>
 
@@ -36,20 +69,21 @@ include "loginValidation.php";
         <section class="container-fluid">
             <section class="row justify-content-center">
                 <section class="col-12 col-sm-6 col-md-4">
-                    <form class="form-container" action="loginValidation.php" method="POST">
+                    <form class="form-container" action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
+
                         <div class="form-group">
                             <label for="email">Email address</label>
                             <input type="email" class="form-control" name="email">
                             <small class="form-text text-muted">We'll never share your email with anyone
                                 else.</small>
                         </div>
+
                         <div class="form-group">
                             <label for="password">Password</label>
                             <input type="password" class="form-control" name="password">
                         </div>
-                        <div class="alert alert-danger" role="alert">
-                            <b><?php echo $message; ?></b>
-                        </div>
+                        
+                        <h5 class="text-center text-danger"><?= $message; ?></h5>
                         <button type="submit" name="login" class="btn btn-info btn-block">Login</button>
                     </form>
                 </section>

@@ -20,15 +20,30 @@
                 <a class="nav-link" href="#"><i class="fa fa-globe" aria-hidden="true"></i> Booking</a>
             </li>
             <li class="nav-item dropdown ml-auto">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" data-target="dropdown_target" href="#">
-                    Account
-                    <span><i class="fas fa-chevron-circle-down"></i></span>
-                </a>
-                <div class="dropdown-menu bg-dark" aria-labelledby="dropdown_target">
-                    <a href="login.php" class="dropdown-item text-info">Login</a>
-                    <div class="dropdown-divider"></div>
-                    <a href="register.php" class="dropdown-item text-info">Register</a>
-                </div>
+                <?php
+                if (isset($_SESSION['is_login'])) {
+                ?>
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" data-target="dropdown_target" href="#">
+                        <?= $_SESSION['name'] ?>
+                        <span><i class="fas fa-chevron-circle-down"></i></span>
+                    </a>
+                    <div class="dropdown-menu bg-dark" aria-labelledby="dropdown_target">
+                        <a href="../logout.php" class="dropdown-item text-info">Logout</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item text-info">Profile</a>
+                    </div>
+                <?php } else { ?>
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" data-target="dropdown_target" href="#">
+                        Account
+                        <span><i class="fas fa-chevron-circle-down"></i></span>
+                    </a>
+
+                    <div class="dropdown-menu bg-dark" aria-labelledby="dropdown_target">
+                        <a href="login.php" class="dropdown-item text-info">Login</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="register.php" class="dropdown-item text-info">Register</a>
+                    </div>
+                <?php } ?>
             </li>
         </ul>
     </div>
