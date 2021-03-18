@@ -1,3 +1,35 @@
+<?php
+include "DBConnect.php";
+$msg = "";
+if (isset($_POST['register'])) {
+    $fname = $_POST['fname'];
+    $lname = $_POST['lname'];
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $cpassword = $_POST['cpassword'];
+
+    $query = "SELECT * FROM users WHERE(email=?)";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param('s', $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        if ($email == $row['email']) {
+            $msg = "User Already Exist";
+        }
+    } elseif ($password != $cpassword) {
+        $msg = "Passwords Doesn't Match";
+    } else {
+        $query = "INSERT INTO users (fname, lname, name, email, password) values('$fname','$lname','$name','$email','$password')";
+        if ($conn->query($query)) {
+            header("location:./user/userDashboard.php");
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,38 +62,39 @@
         <section class="container-fluid">
             <section class="row justify-content-center">
                 <section class="col-12 col-sm-6 col-md-4">
-                    <form class="form-container" id="registrationForm">
+                    <form action="<?= $_SERVER['PHP_SELF'] ?>" class="form-container" id="registrationForm" method="post">
                         <div class="form-row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="fname">First name</label>
-                                    <input type="text" class="form-control" name="fname">
+                                    <input type="text" name="fname" class="form-control" name="fname">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="lname">last name</label>
-                                    <input type="text" class="form-control" name="lname">
+                                    <input type="text" name="lname" class="form-control" name="lname">
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="uname">Username</label>
-                            <input type="text" class="form-control">
+                            <input type="text" name="name" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="email">Email address</label>
-                            <input type="email" class="form-control">
+                            <input type="email" name="email" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
-                            <input type="password" class="form-control">
+                            <input type="password" name="password" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label for="confirm password">Confirm Password</label>
-                            <input type="password" class="form-control">
+                            <label for="password">Confirm Password</label>
+                            <input type="password" name="cpassword" class="form-control">
                         </div>
-                        <button type="submit" class="btn btn-info btn-block">Register</button>
+                        <h5 class="text-center text-danger"><?= $msg; ?></h5>
+                        <button type="submit" name="register" class="btn btn-info btn-block">Register</button>
                     </form>
                 </section>
             </section>

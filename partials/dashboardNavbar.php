@@ -8,10 +8,10 @@
     <div class="collapse navbar-collapse" id="collapse_target">
         <ul class="navbar navbar-nav w-100">
             <li class="nav-item">
-                <a class="nav-link" href="index.php"><i class="fas fa-home"></i> Home</a>
+                <a class="nav-link" href="../index.php"><i class="fas fa-home"></i> Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="gallery.php"><i class="fas fa-images"></i> Gallery</a>
+                <a class="nav-link" href="../gallery.php"><i class="fas fa-images"></i> Gallery</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#"><i class="fa fa-address-card" aria-hidden="true"></i> Services</a>

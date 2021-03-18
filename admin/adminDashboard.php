@@ -39,8 +39,46 @@ if (isset($_SESSION['role'])) {
 </head>
 
 <body>
-    <?php include "../partials/navbar.php" ?>
-    <h2>Welcome <?php echo $_SESSION['User']; ?></h2>
+    <?php include "../partials/dashboardNavbar.php" ?>
+    <div class="container-fluid mt-3 mb-5">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="list-group list-group-flush bg-dark">
+                    <h3 class="text-white text-center text-uppercase">Dashboard</h3>
+                    <a href="#" class="list-group-item list-group-item-action list-group-item-info active">Users</a>
+                    <a href="#" class="list-group-item list-group-item-action list-group-item-info">Tours</a>
+                    <a href="#" class="list-group-item list-group-item-action list-group-item-info">Packages</a>
+                    <a href="#" class="list-group-item list-group-item-action list-group-item-info">Account</a>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-2">
+                        <button class="btn btn-success">
+                            <i class="fas fa-user-plus"></i>
+                            Add Users
+                        </button>
+                    </div>
+                    <div class="col-md-4 offset-md-6">
+                        <form action="" method="get">
+                            <div class="input-group mb-3">
+                                <input type="search" class="form-control" name="search" placeholder="Search" autocomplete="off">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-info" type="button"><i class="fas fa-search"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php include "../partials/footer.php" ?>
 </body>
 
 </html>
