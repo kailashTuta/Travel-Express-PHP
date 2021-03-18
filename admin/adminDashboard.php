@@ -72,7 +72,37 @@ if (isset($_SESSION['role'])) {
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-
+                        <table class="table table-striped">
+                            <tr class="bg-dark text-white">
+                                <th>Id</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Role_As</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                            <?php
+                            include "../DBConnect.php";
+                            $q = "SELECT * FROM users";
+                            $res = $conn->query($q);
+                            while ($row = $res->fetch_assoc()) {
+                            ?>
+                                <tr>
+                                    <td><?php echo $row['id']; ?></td>
+                                    <td><?php echo $row['fname']; ?></td>
+                                    <td><?php echo $row['lname']; ?></td>
+                                    <td><?php echo $row['name']; ?></td>
+                                    <td><?php echo $row['email']; ?></td>
+                                    <td><?php echo $row['role_as']; ?></td>
+                                    <td><a href="#" class="btn btn-primary"><i class="fas fa-user-edit"></i></a></td>
+                                    <td><a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a></td>
+                                </tr>
+                            <?php
+                            }
+                            ?>
+                        </table>
                     </div>
                 </div>
             </div>
