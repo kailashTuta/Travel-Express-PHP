@@ -25,7 +25,7 @@ if (isset($_POST['register'])) {
     } else {
         $query = "INSERT INTO users (fname, lname, name, email, password) values('$fname','$lname','$name','$email','$password')";
         if ($conn->query($query)) {
-            header("location:./user/userDashboard.php");
+            header("location:login.php");
         }
     }
 }

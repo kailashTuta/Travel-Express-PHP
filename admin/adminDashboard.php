@@ -60,11 +60,11 @@ if (isset($_SESSION['role'])) {
                         </button>
                     </div>
                     <div class="col-md-4 offset-md-6">
-                        <form action="" method="get">
+                        <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
                             <div class="input-group mb-3">
                                 <input type="search" class="form-control" name="search" placeholder="Search" autocomplete="off">
                                 <div class="input-group-append">
-                                    <button class="btn btn-outline-info" type="button"><i class="fas fa-search"></i></button>
+                                    <button class="btn btn-outline-info" name="submit" type="submit"><i class="fas fa-search"></i></button>
                                 </div>
                             </div>
                         </form>
@@ -85,21 +85,99 @@ if (isset($_SESSION['role'])) {
                             </tr>
                             <?php
                             include "../DBConnect.php";
-                            $q = "SELECT * FROM users";
-                            $res = $conn->query($q);
-                            while ($row = $res->fetch_assoc()) {
-                            ?>
-                                <tr>
-                                    <td><?php echo $row['id']; ?></td>
-                                    <td><?php echo $row['fname']; ?></td>
-                                    <td><?php echo $row['lname']; ?></td>
-                                    <td><?php echo $row['name']; ?></td>
-                                    <td><?php echo $row['email']; ?></td>
-                                    <td><?php echo $row['role_as']; ?></td>
-                                    <td><a href="#" class="btn btn-primary"><i class="fas fa-user-edit"></i></a></td>
-                                    <td><a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a></td>
-                                </tr>
-                            <?php
+                            if (isset($_POST['submit'])) {
+                                $search =  $_POST['search'];
+                                $q = "SELECT * FROM users WHERE name LIKE ('%$search%')";
+                                $res = $conn->query($q);
+                                while ($row = $res->fetch_assoc()) {
+                                    echo '<tr>';
+
+                                    echo '<td>';
+                                    echo $row['id'];
+                                    echo '</td>';
+
+                                    echo '<td>';
+                                    echo $row['fname'];
+                                    echo '</td>';
+
+                                    echo '<td>';
+                                    echo $row['lname'];
+                                    echo '</td>';
+
+                                    echo '<td>';
+                                    echo $row['name'];
+                                    echo '</td>';
+
+                                    echo '<td>';
+                                    echo $row['email'];
+                                    echo '</td>';
+
+                                    echo '<td>';
+                                    echo $row['role_as'];
+                                    echo '</td>';
+
+                                    echo '<td>';
+                                    echo '<a href="#" class="btn btn-primary">';
+                                    echo '<i class="fas fa-user-edit">';
+                                    echo '</i>';
+                                    echo '</a>';
+                                    echo '</td>';
+
+                                    echo '<td>';
+                                    echo '<a href="#" class="btn btn-danger">';
+                                    echo '<i class="fas fa-trash">';
+                                    echo '</i>';
+                                    echo '</a>';
+                                    echo '</td>';
+
+                                    echo '</tr>';
+                                }
+                            } else {
+                                $q = "SELECT * FROM users";
+                                $res = $conn->query($q);
+                                while ($row = $res->fetch_assoc()) {
+                                    echo '<tr>';
+
+                                    echo '<td>';
+                                    echo $row['id'];
+                                    echo '</td>';
+
+                                    echo '<td>';
+                                    echo $row['fname'];
+                                    echo '</td>';
+
+                                    echo '<td>';
+                                    echo $row['lname'];
+                                    echo '</td>';
+
+                                    echo '<td>';
+                                    echo $row['name'];
+                                    echo '</td>';
+
+                                    echo '<td>';
+                                    echo $row['email'];
+                                    echo '</td>';
+
+                                    echo '<td>';
+                                    echo $row['role_as'];
+                                    echo '</td>';
+
+                                    echo '<td>';
+                                    echo '<a href="#" class="btn btn-primary">';
+                                    echo '<i class="fas fa-user-edit">';
+                                    echo '</i>';
+                                    echo '</a>';
+                                    echo '</td>';
+
+                                    echo '<td>';
+                                    echo '<a href="#" class="btn btn-danger">';
+                                    echo '<i class="fas fa-trash">';
+                                    echo '</i>';
+                                    echo '</a>';
+                                    echo '</td>';
+
+                                    echo '</tr>';
+                                }
                             }
                             ?>
                         </table>
