@@ -3,10 +3,10 @@
 session_start();
 if (isset($_SESSION['role'])) {
     if ($_SESSION['role'] != 'admin') {
-        header("Location:../user/userDashboard.php");
+        header("Location:userDashboard.php");
     }
 } else {
-    header("location:../login.php");
+    header("location:login.php");
 }
 
 
@@ -29,17 +29,17 @@ if (isset($_SESSION['role'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
 
     <!-- CSS -->
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
     <!-- JavaScript -->
-    <script src="../js/script.js" type="text/javascript"></script>
+    <script src="./js/script.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
 </head>
 
 <body>
-    <?php include "../partials/dashboardNavbar.php" ?>
+    <?php include "./partials/navbar.php" ?>
     <div class="container-fluid mt-3 mb-5">
         <div class="row">
             <div class="col-md-2">
@@ -84,7 +84,7 @@ if (isset($_SESSION['role'])) {
                                 <th>Delete</th>
                             </tr>
                             <?php
-                            include "../DBConnect.php";
+                            include "./DBConnect.php";
                             if (isset($_POST['submit'])) {
                                 $search =  $_POST['search'];
                                 $q = "SELECT * FROM users WHERE name LIKE ('%$search%')";
@@ -186,7 +186,7 @@ if (isset($_SESSION['role'])) {
             </div>
         </div>
     </div>
-    <?php include "../partials/footer.php" ?>
+    <?php include "./partials/footer.php" ?>
 </body>
 
 </html>

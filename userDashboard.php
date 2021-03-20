@@ -3,10 +3,10 @@
 session_start();
 if (isset($_SESSION['role'])) {
     if ($_SESSION['role'] != 'user') {
-        header("Location:../admin/adminDashboard.php");
+        header("Location:adminDashboard.php");
     }
 } else {
-    header("location:../login.php");
+    header("location:login.php");
 }
 ?>
 <!DOCTYPE html>
@@ -26,7 +26,7 @@ if (isset($_SESSION['role'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
 
     <!-- CSS -->
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
     <!-- JavaScript -->
@@ -36,7 +36,7 @@ if (isset($_SESSION['role'])) {
 </head>
 
 <body>
-    <?php include "../partials/navbar.php" ?>
+    <?php include "./partials/navbar.php" ?>
     <h2>Welcome <?php echo $_SESSION['User']; ?></h2>
 </body>
 

@@ -20,13 +20,13 @@ if (isset($_POST["login"])) {
                 $_SESSION['name'] = $row['name'];
                 $_SESSION['User'] = $row["email"];
                 $_SESSION['role'] = $row['role_as'];
-                header("location:./admin/adminDashboard.php");
+                header("location:adminDashboard.php");
             } else {
                 $_SESSION['is_login'] = true;
                 $_SESSION['name'] = $row['name'];
                 $_SESSION['User'] = $row["email"];
                 $_SESSION['role'] = $row['role_as'];
-                header("location:./user/userDashboard.php");
+                header("location:userDashboard.php");
             }
         }
     } else {
@@ -82,7 +82,7 @@ if (isset($_POST["login"])) {
                             <label for="password">Password</label>
                             <input type="password" class="form-control" name="password">
                         </div>
-                        
+
                         <h5 class="text-center text-danger"><?= $message; ?></h5>
                         <button type="submit" name="login" class="btn btn-info btn-block">Login</button>
                     </form>
