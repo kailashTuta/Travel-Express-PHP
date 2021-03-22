@@ -8,16 +8,26 @@
     <div class="collapse navbar-collapse" id="collapse_target">
         <ul class="navbar navbar-nav w-100">
             <li class="nav-item">
-                <a class="nav-link" href="index.php"><i class="fas fa-home"></i> Home</a>
+                <a class="nav-link" href="index.php"><span class="material-icons">home</span> Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="gallery.php"><i class="fas fa-images"></i> Gallery</a>
+                <a class="nav-link" href="gallery.php">
+                    <span class="material-icons">
+                        collections
+                    </span>
+                    Gallery
+                </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#"><i class="fa fa-address-card" aria-hidden="true"></i> Services</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fa fa-globe" aria-hidden="true"></i> Booking</a>
+                <a class="nav-link" href="#">
+                    <span class="material-icons">
+                        travel_explore
+                    </span>
+                    Booking
+                </a>
             </li>
             <li class="nav-item dropdown ml-auto">
                 <?php
@@ -25,7 +35,9 @@
                 ?>
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" data-target="dropdown_target" href="#">
                         <?= $_SESSION['name'] ?>
-                        <span><i class="fas fa-chevron-circle-down"></i></span>
+                        <span class="material-icons">
+                            expand_more
+                        </span>
                     </a>
                     <div class="dropdown-menu bg-dark" aria-labelledby="dropdown_target">
                         <a href="logout.php" class="dropdown-item text-info">Logout</a>
@@ -34,8 +46,7 @@
                     </div>
                 <?php } else { ?>
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" data-target="dropdown_target" href="#">
-                        Account
-                        <span><i class="fas fa-chevron-circle-down"></i></span>
+                        Account<span class="material-icons">expand_more</span>
                     </a>
 
                     <div class="dropdown-menu bg-dark" aria-labelledby="dropdown_target">

@@ -25,7 +25,7 @@ if (isset($_POST['register'])) {
     } else {
         $query = "INSERT INTO users (fname, lname, name, email, password) values('$fname','$lname','$name','$email','$password')";
         if ($conn->query($query)) {
-            header("location:login.php");
+            header("location:userDashboard.php");
         }
     }
 }
@@ -45,6 +45,7 @@ if (isset($_POST['register'])) {
 
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!-- CSS -->
     <link rel="stylesheet" href="./css/style.css">

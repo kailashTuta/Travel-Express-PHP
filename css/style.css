@@ -27,6 +27,11 @@ a {
     color: #4BC0D9
 }
 
+.material-icons {
+    display: inline-flex;
+    vertical-align: top;
+}
+
 .dropdown-toggle::after {
     content: none;
 }

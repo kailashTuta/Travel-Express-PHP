@@ -1,5 +1,6 @@
 <?php
 
+$msg = "";
 session_start();
 if (isset($_SESSION['role'])) {
     if ($_SESSION['role'] != 'admin') {
@@ -8,6 +9,49 @@ if (isset($_SESSION['role'])) {
 } else {
     header("location:login.php");
 }
+
+if (isset($_POST['addUsers'])) {
+    include "./DBConnect.php";
+    $fname = $_POST['fname'];
+    $lname = $_POST['lname'];
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $role_as = $_POST['role_as'];
+    $password = $_POST['password'];
+
+    $query = "INSERT INTO users(fname,lname,name,email,role_as,password)
+                VALUES('$fname','$lname','$name','$email','$role_as','$password')";
+
+    if ($conn->query($query)) {
+        echo '<script> alert("User added successfully"); </script>';
+        header('location:adminDashboard.php');
+    } else {
+        $msg = "$conn->error";
+        echo '<script> alert($msg); </script>';
+    }
+}
+
+if (isset($_POST['updateUsers'])) {
+    include "./DBConnect.php";
+    $uid = $_POST['uid'];
+    $fname = $_POST['fname'];
+    $lname = $_POST['lname'];
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $role_as = $_POST['role_as'];
+    $password = $_POST['password'];
+
+    $query = "UPDATE users SET fname='$fname', lname='$lname', name='$name', email='$email', role_as='$role_as' WHERE id='$uid'";
+
+    if ($conn->query($query)) {
+        echo '<script> alert("User updated successfully"); </script>';
+        header('location:adminDashboard.php');
+    } else {
+        $msg = "$conn->error";
+        echo '<script> alert($msg); </script>';
+    }
+}
+
 
 
 ?>
@@ -27,6 +71,7 @@ if (isset($_SESSION['role'])) {
 
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!-- CSS -->
     <link rel="stylesheet" href="./css/style.css">
@@ -45,19 +90,17 @@ if (isset($_SESSION['role'])) {
             <div class="col-md-2">
                 <div class="list-group list-group-flush bg-dark">
                     <h3 class="text-white text-center text-uppercase">Dashboard</h3>
-                    <a href="#" class="list-group-item list-group-item-action list-group-item-info active">Users</a>
+                    <a href="adminDashboard.php" class="list-group-item list-group-item-action list-group-item-info active">Users</a>
                     <a href="#" class="list-group-item list-group-item-action list-group-item-info">Tours</a>
                     <a href="#" class="list-group-item list-group-item-action list-group-item-info">Packages</a>
                     <a href="#" class="list-group-item list-group-item-action list-group-item-info">Account</a>
                 </div>
             </div>
             <div class="col-md-9">
+
                 <div class="row">
                     <div class="col-md-2">
-                        <button class="btn btn-success">
-                            <i class="fas fa-user-plus"></i>
-                            Add Users
-                        </button>
+                        <?php include "./partials/addUser.php" ?>
                     </div>
                     <div class="col-md-4 offset-md-6">
                         <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
@@ -72,115 +115,113 @@ if (isset($_SESSION['role'])) {
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <table class="table table-striped">
-                            <tr class="bg-dark text-white">
-                                <th>Id</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Username</th>
-                                <th>Email</th>
-                                <th>Role_As</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
-                            </tr>
-                            <?php
-                            include "./DBConnect.php";
-                            if (isset($_POST['submit'])) {
-                                $search =  $_POST['search'];
-                                $q = "SELECT * FROM users WHERE name LIKE ('%$search%')";
-                                $res = $conn->query($q);
-                                while ($row = $res->fetch_assoc()) {
-                                    echo '<tr>';
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <tr class="bg-dark text-white">
+                                    <th>Id</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>Role_As</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                                <?php
+                                include "./DBConnect.php";
+                                if (isset($_POST['submit'])) {
+                                    $search =  $_POST['search'];
+                                    $q = "SELECT * FROM users WHERE name LIKE ('%$search%')";
+                                    $res = $conn->query($q);
+                                    while ($row = $res->fetch_assoc()) {
+                                        echo '<tr>';
 
-                                    echo '<td>';
-                                    echo $row['id'];
-                                    echo '</td>';
+                                        echo '<td>';
+                                        echo $row['id'];
+                                        echo '</td>';
 
-                                    echo '<td>';
-                                    echo $row['fname'];
-                                    echo '</td>';
+                                        echo '<td>';
+                                        echo $row['fname'];
+                                        echo '</td>';
 
-                                    echo '<td>';
-                                    echo $row['lname'];
-                                    echo '</td>';
+                                        echo '<td>';
+                                        echo $row['lname'];
+                                        echo '</td>';
 
-                                    echo '<td>';
-                                    echo $row['name'];
-                                    echo '</td>';
+                                        echo '<td>';
+                                        echo $row['name'];
+                                        echo '</td>';
 
-                                    echo '<td>';
-                                    echo $row['email'];
-                                    echo '</td>';
+                                        echo '<td>';
+                                        echo $row['email'];
+                                        echo '</td>';
 
-                                    echo '<td>';
-                                    echo $row['role_as'];
-                                    echo '</td>';
+                                        echo '<td>';
+                                        echo $row['role_as'];
+                                        echo '</td>';
 
-                                    echo '<td>';
-                                    echo '<a href="#" class="btn btn-primary">';
-                                    echo '<i class="fas fa-user-edit">';
-                                    echo '</i>';
-                                    echo '</a>';
-                                    echo '</td>';
+                                        echo '<td>';
+                                        include "./partials/editUser.php";
+                                        echo '</td>';
 
-                                    echo '<td>';
-                                    echo '<a href="#" class="btn btn-danger">';
-                                    echo '<i class="fas fa-trash">';
-                                    echo '</i>';
-                                    echo '</a>';
-                                    echo '</td>';
+                                        echo '<td>';
+                                ?>
+                                        <a href="./partials/deleteUser.php?delete=<?php echo $row['id']; ?>" class="btn btn-danger">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    <?php
+                                        echo '</td>';
 
-                                    echo '</tr>';
+                                        echo '</tr>';
+                                    }
+                                } else {
+                                    $q = "SELECT * FROM users";
+                                    $res = $conn->query($q);
+                                    while ($row = $res->fetch_assoc()) {
+                                        echo '<tr>';
+
+                                        echo '<td>';
+                                        echo $row['id'];
+                                        echo '</td>';
+
+                                        echo '<td>';
+                                        echo $row['fname'];
+                                        echo '</td>';
+
+                                        echo '<td>';
+                                        echo $row['lname'];
+                                        echo '</td>';
+
+                                        echo '<td>';
+                                        echo $row['name'];
+                                        echo '</td>';
+
+                                        echo '<td>';
+                                        echo $row['email'];
+                                        echo '</td>';
+
+                                        echo '<td>';
+                                        echo $row['role_as'];
+                                        echo '</td>';
+
+                                        echo '<td>';
+                                        include "./partials/editUser.php";
+                                        echo '</td>';
+
+                                        echo '<td>';
+                                    ?>
+                                        <a href="./partials/deleteUser.php?delete=<?php echo $row['id']; ?>" class="btn btn-danger">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                <?php
+                                        echo '</td>';
+
+                                        echo '</tr>';
+                                    }
                                 }
-                            } else {
-                                $q = "SELECT * FROM users";
-                                $res = $conn->query($q);
-                                while ($row = $res->fetch_assoc()) {
-                                    echo '<tr>';
-
-                                    echo '<td>';
-                                    echo $row['id'];
-                                    echo '</td>';
-
-                                    echo '<td>';
-                                    echo $row['fname'];
-                                    echo '</td>';
-
-                                    echo '<td>';
-                                    echo $row['lname'];
-                                    echo '</td>';
-
-                                    echo '<td>';
-                                    echo $row['name'];
-                                    echo '</td>';
-
-                                    echo '<td>';
-                                    echo $row['email'];
-                                    echo '</td>';
-
-                                    echo '<td>';
-                                    echo $row['role_as'];
-                                    echo '</td>';
-
-                                    echo '<td>';
-                                    echo '<a href="#" class="btn btn-primary">';
-                                    echo '<i class="fas fa-user-edit">';
-                                    echo '</i>';
-                                    echo '</a>';
-                                    echo '</td>';
-
-                                    echo '<td>';
-                                    echo '<a href="#" class="btn btn-danger">';
-                                    echo '<i class="fas fa-trash">';
-                                    echo '</i>';
-                                    echo '</a>';
-                                    echo '</td>';
-
-                                    echo '</tr>';
-                                }
-                            }
-                            ?>
-                        </table>
+                                ?>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
