@@ -14,6 +14,7 @@
             </div>
             <form method="post" action="<?= $_SERVER['PHP_SELF'] ?>">
                 <div class="modal-body">
+
                     <input type="hidden" name="uid" id="uid" value="">
                     <div class="form-row">
 

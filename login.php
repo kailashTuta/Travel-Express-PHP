@@ -17,13 +17,32 @@ if (isset($_POST["login"])) {
         while ($row = mysqli_fetch_assoc($result)) {
             if ($row["role_as"] == "admin") {
                 $_SESSION['is_login'] = true;
+                $_SESSION['id'] = $row['id'];
+                $_SESSION['fname'] = $row['fname'];
+                $_SESSION['lname'] = $row['lname'];
                 $_SESSION['name'] = $row['name'];
+                $_SESSION['gender'] = $row['gender'];
+                $_SESSION['mobile'] = $row['mobile'];
+                $_SESSION['alternate_mobile'] = $row['alternate_mobile'];
+                $_SESSION['address'] = $row['address'];
+                $_SESSION['city'] = $row['city'];
+                $_SESSION['pincode'] = $row['pincode'];
+                $_SESSION['image'] = $row['image'];
                 $_SESSION['User'] = $row["email"];
                 $_SESSION['role'] = $row['role_as'];
                 header("location:adminDashboard.php");
             } else {
                 $_SESSION['is_login'] = true;
+                $_SESSION['fname'] = $row['fname'];
+                $_SESSION['lname'] = $row['lname'];
                 $_SESSION['name'] = $row['name'];
+                $_SESSION['gender'] = $row['gender'];
+                $_SESSION['mobile'] = $row['mobile'];
+                $_SESSION['alternate_mobile'] = $row['alternate_mobile'];
+                $_SESSION['address'] = $row['address'];
+                $_SESSION['city'] = $row['city'];
+                $_SESSION['pincode'] = $row['pincode'];
+                $_SESSION['image'] = $row['image'];
                 $_SESSION['User'] = $row["email"];
                 $_SESSION['role'] = $row['role_as'];
                 header("location:userDashboard.php");

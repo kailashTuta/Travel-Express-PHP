@@ -317,3 +317,17 @@ blockquote::after {
         background: none;
     }
 }
+
+label.file-upload input[type="file"] {
+    position: absolute;
+    top: -1000px;
+    /* overflow: hidden; */
+}
+
+.file-upload {
+    background: #4BC0D9;
+    color: #fff;
+    display: inline-block;
+    cursor: pointer;
+    margin-left: 45px;
+}
