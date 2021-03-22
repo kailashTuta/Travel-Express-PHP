@@ -1,32 +1,49 @@
 <?php
 include "DBConnect.php";
 $msg = "";
+$fname = $lname = $name = $email = $role_as = $password = $cpassword = "";
+function clean_input($data)
+{
+    $data = trim($data);
+    $data = stripcslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
 if (isset($_POST['register'])) {
-    $fname = $_POST['fname'];
-    $lname = $_POST['lname'];
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $cpassword = $_POST['cpassword'];
+    $fname = clean_input($_POST['fname']);
+    $lname = clean_input($_POST['lname']);
+    $name = clean_input($_POST['name']);
+    $email = clean_input($_POST['email']);
+    $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+    // $role_as = clean_input($_POST['role_as']);
+    $password = clean_input($_POST['password']);
+    $cpassword = clean_input($_POST['cpassword']);
 
-    $query = "SELECT * FROM users WHERE(email=?)";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param('s', $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    if (
+        isset($fname) && $fname != "" && isset($lname) && $lname != "" && isset($name) && $name != "" && isset($password) && $password != "" &&
+        isset($email) && $email != "" && isset($cpassword) && $cpassword != ""
+    ) {
+        $query = "SELECT * FROM users WHERE(email=?)";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param('s', $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-    if (mysqli_num_rows($result) > 0) {
-        $row = mysqli_fetch_assoc($result);
-        if ($email == $row['email']) {
-            $msg = "User Already Exist";
+        if (mysqli_num_rows($result) > 0) {
+            $row = mysqli_fetch_assoc($result);
+            if ($email == $row['email']) {
+                $msg = "User Already Exist";
+            }
+        } elseif ($password != $cpassword) {
+            $msg = "Passwords Doesn't Match";
+        } else {
+            $query = "INSERT INTO users (fname, lname, name, email, password) values('$fname','$lname','$name','$email','$password')";
+            if ($conn->query($query)) {
+                header("location:userDashboard.php");
+            }
         }
-    } elseif ($password != $cpassword) {
-        $msg = "Passwords Doesn't Match";
     } else {
-        $query = "INSERT INTO users (fname, lname, name, email, password) values('$fname','$lname','$name','$email','$password')";
-        if ($conn->query($query)) {
-            header("location:userDashboard.php");
-        }
+        $msg = "Please Enter the Values";
     }
 }
 ?>
