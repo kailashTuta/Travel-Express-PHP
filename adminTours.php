@@ -10,42 +10,43 @@ if (isset($_SESSION['role'])) {
     header("location:login.php");
 }
 
-if (isset($_POST['addUsers'])) {
+if (isset($_POST['addTours'])) {
     include "./DBConnect.php";
-    $fname = $_POST['fname'];
-    $lname = $_POST['lname'];
     $name = $_POST['name'];
-    $email = $_POST['email'];
-    $role_as = $_POST['role_as'];
-    $password = $_POST['password'];
+    $description = $_POST['description'];
+    $places_covered = $_POST['places_covered'];
+    $price = $_POST['price'];
+    $image = basename($_FILES["image"]["name"]);
+    $target = './images/tour-package-images' . basename($_FILES['image']['name']);
 
-    $query = "INSERT INTO users(fname,lname,name,email,role_as,password)
-                VALUES('$fname','$lname','$name','$email','$role_as','$password')";
+    $query = "INSERT INTO tours(name,description,places_covered,price,image)
+                VALUES('$name','$description','$places_covered','$price','$image')";
+
+    move_uploaded_file($_FILES['image']['tmp_name'], $target);
 
     if ($conn->query($query)) {
-        echo '<script> alert("User added successfully"); </script>';
-        header('location:adminDashboard.php');
+        echo '<script> alert("Tour added successfully"); </script>';
+        header('location:adminTours.php');
     } else {
         $msg = "$conn->error";
-        echo '<script> alert($msg); </script>';
+        echo $msg;
     }
 }
 
-if (isset($_POST['updateUsers'])) {
+if (isset($_POST['updateTours'])) {
     include "./DBConnect.php";
-    $uid = $_POST['uid'];
-    $fname = $_POST['fname'];
-    $lname = $_POST['lname'];
+    $tid = $_POST['tid'];
     $name = $_POST['name'];
-    $email = $_POST['email'];
-    $role_as = $_POST['role_as'];
-    $password = $_POST['password'];
+    $description = $_POST['description'];
+    $places_covered = $_POST['places_covered'];
+    $price = $_POST['price'];
 
-    $query = "UPDATE users SET fname='$fname', lname='$lname', name='$name', email='$email', role_as='$role_as' WHERE id='$uid'";
+
+    $query = "UPDATE tours SET name='$name', description='$description', places_covered='$places_covered', price='$price' WHERE t_id='$tid'";
 
     if ($conn->query($query)) {
-        echo '<script> alert("User updated successfully"); </script>';
-        header('location:adminDashboard.php');
+        echo '<script> alert("Tour updated successfully"); </script>';
+        header('location:adminTours.php');
     } else {
         $msg = "$conn->error";
         echo '<script> alert($msg); </script>';
@@ -90,8 +91,8 @@ if (isset($_POST['updateUsers'])) {
             <div class="col-md-2">
                 <div class="list-group list-group-flush bg-dark">
                     <h3 class="text-white text-center text-uppercase">Dashboard</h3>
-                    <a href="adminDashboard.php" class="list-group-item list-group-item-action list-group-item-info active">Users</a>
-                    <a href="adminTours.php" class="list-group-item list-group-item-action list-group-item-info">Tours</a>
+                    <a href="adminDashboard.php" class="list-group-item list-group-item-action list-group-item-info">Users</a>
+                    <a href="adminTours.php" class="list-group-item list-group-item-action list-group-item-info active">Tours</a>
                     <a href="#" class="list-group-item list-group-item-action list-group-item-info">Packages</a>
                     <a href="./adminProfile.php" class="list-group-item list-group-item-action list-group-item-info">Account</a>
                 </div>
@@ -100,7 +101,7 @@ if (isset($_POST['updateUsers'])) {
 
                 <div class="row">
                     <div class="col-md-2">
-                        <?php include "./partials/addUser.php" ?>
+                        <?php include "./partials/addTour.php" ?>
                     </div>
                     <div class="col-md-4 offset-md-6">
                         <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
@@ -118,34 +119,25 @@ if (isset($_POST['updateUsers'])) {
                         <div class="table-responsive">
                             <table class="table table-striped">
                                 <tr class="bg-dark text-white">
-                                    <th>Id</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Username</th>
-                                    <th>Email</th>
-                                    <th>Role_As</th>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
+                                    <th scope="col">Id</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Places Covered</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Edit</th>
+                                    <th scope="col">Delete</th>
                                 </tr>
                                 <?php
                                 include "./DBConnect.php";
                                 if (isset($_POST['submit'])) {
                                     $search =  $_POST['search'];
-                                    $q = "SELECT * FROM users WHERE name LIKE ('%$search%')";
+                                    $q = "SELECT * FROM tours WHERE name LIKE ('%$search%')";
                                     $res = $conn->query($q);
                                     while ($row = $res->fetch_assoc()) {
                                         echo '<tr>';
 
                                         echo '<td>';
-                                        echo $row['id'];
-                                        echo '</td>';
-
-                                        echo '<td>';
-                                        echo $row['fname'];
-                                        echo '</td>';
-
-                                        echo '<td>';
-                                        echo $row['lname'];
+                                        echo $row['t_id'];
                                         echo '</td>';
 
                                         echo '<td>';
@@ -153,20 +145,25 @@ if (isset($_POST['updateUsers'])) {
                                         echo '</td>';
 
                                         echo '<td>';
-                                        echo $row['email'];
+                                        echo $row['description'];
                                         echo '</td>';
 
                                         echo '<td>';
-                                        echo $row['role_as'];
+                                        echo $row['places_covered'];
                                         echo '</td>';
 
                                         echo '<td>';
-                                        include "./partials/editUser.php";
+                                        echo $row['price'];
+                                        echo '</td>';
+
+
+                                        echo '<td>';
+                                        include "./partials/editTour.php";
                                         echo '</td>';
 
                                         echo '<td>';
                                 ?>
-                                        <a href="./partials/deleteUser.php?delete=<?php echo $row['id']; ?>" class="btn btn-danger">
+                                        <a href="./partials/deleteTour.php?delete=<?php echo $row['t_id']; ?>" class="btn btn-danger">
                                             <i class="fas fa-trash"></i>
                                         </a>
                                     <?php
@@ -175,21 +172,13 @@ if (isset($_POST['updateUsers'])) {
                                         echo '</tr>';
                                     }
                                 } else {
-                                    $q = "SELECT * FROM users";
+                                    $q = "SELECT * FROM tours";
                                     $res = $conn->query($q);
                                     while ($row = $res->fetch_assoc()) {
                                         echo '<tr>';
 
                                         echo '<td>';
-                                        echo $row['id'];
-                                        echo '</td>';
-
-                                        echo '<td>';
-                                        echo $row['fname'];
-                                        echo '</td>';
-
-                                        echo '<td>';
-                                        echo $row['lname'];
+                                        echo $row['t_id'];
                                         echo '</td>';
 
                                         echo '<td>';
@@ -197,20 +186,24 @@ if (isset($_POST['updateUsers'])) {
                                         echo '</td>';
 
                                         echo '<td>';
-                                        echo $row['email'];
+                                        echo $row['description'];
                                         echo '</td>';
 
                                         echo '<td>';
-                                        echo $row['role_as'];
+                                        echo $row['places_covered'];
                                         echo '</td>';
 
                                         echo '<td>';
-                                        include "./partials/editUser.php";
+                                        echo $row['price'];
+                                        echo '</td>';
+
+                                        echo '<td>';
+                                        include "./partials/editTour.php";
                                         echo '</td>';
 
                                         echo '<td>';
                                     ?>
-                                        <a href="./partials/deleteUser.php?delete=<?php echo $row['id']; ?>" class="btn btn-danger">
+                                        <a href="./partials/deleteTour.php?delete=<?php echo $row['t_id']; ?>" class="btn btn-danger">
                                             <i class="fas fa-trash"></i>
                                         </a>
                                 <?php
