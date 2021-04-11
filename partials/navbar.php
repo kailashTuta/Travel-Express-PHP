@@ -19,14 +19,11 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fa fa-address-card" aria-hidden="true"></i> Services</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="tours.php">
                     <span class="material-icons">
-                        travel_explore
+                        explore
                     </span>
-                    Booking
+                    Tours
                 </a>
             </li>
             <li class="nav-item dropdown ml-auto">

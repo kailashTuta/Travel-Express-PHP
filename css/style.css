@@ -331,3 +331,21 @@ label.file-upload input[type="file"] {
     cursor: pointer;
     margin-left: 45px;
 }
+
+.card-img-top {
+    width: 100%;
+    height: 12vw;
+    object-fit: cover;
+}
+
+.inner {
+    overflow: hidden;
+}
+
+.inner img {
+    transition: all 1.5s ease;
+}
+
+.inner:hover img {
+    transform: scale(1.5);
+}

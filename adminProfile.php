@@ -65,10 +65,10 @@ if (isset($_POST['update-info'])) {
             <div class="col-md-2">
                 <div class="list-group list-group-flush bg-dark">
                     <h3 class="text-white text-center text-uppercase">Dashboard</h3>
-                    <a href="./adminDashboard.php" class="list-group-item list-group-item-action list-group-item-info">Users</a>
+                    <a href="adminDashboard.php" class="list-group-item list-group-item-action list-group-item-info">Users</a>
                     <a href="adminTours.php" class="list-group-item list-group-item-action list-group-item-info">Tours</a>
-                    <a href="#" class="list-group-item list-group-item-action list-group-item-info">Packages</a>
-                    <a href="./adminProfile.php" class="list-group-item list-group-item-action list-group-item-info active">Account</a>
+                    <a href="adminPackages.php" class="list-group-item list-group-item-action list-group-item-info">Packages</a>
+                    <a href="adminProfile.php" class="list-group-item list-group-item-action list-group-item-info active">Account</a>
                 </div>
             </div>
             <div class="col-md-9">
