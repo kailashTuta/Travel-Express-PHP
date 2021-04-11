@@ -92,7 +92,7 @@ if (isset($_POST['updateUsers'])) {
                     <h3 class="text-white text-center text-uppercase">Dashboard</h3>
                     <a href="adminDashboard.php" class="list-group-item list-group-item-action list-group-item-info active">Users</a>
                     <a href="adminTours.php" class="list-group-item list-group-item-action list-group-item-info">Tours</a>
-                    <a href="#" class="list-group-item list-group-item-action list-group-item-info">Packages</a>
+                    <a href="adminPackages.php" class="list-group-item list-group-item-action list-group-item-info">Packages</a>
                     <a href="./adminProfile.php" class="list-group-item list-group-item-action list-group-item-info">Account</a>
                 </div>
             </div>

@@ -10,46 +10,46 @@ if (isset($_SESSION['role'])) {
     header("location:login.php");
 }
 
-if (isset($_POST['addTours'])) {
+if (isset($_POST['addPackages'])) {
     include "./DBConnect.php";
     $name = $_POST['name'];
     $description = $_POST['description'];
     $places_covered = $_POST['places_covered'];
     $price = $_POST['price'];
     $image = basename($_FILES["image"]["name"]);
-    $target = './images/tour-package-images' . basename($_FILES['image']['name']);
+    $target = './images/package-images' . basename($_FILES['image']['name']);
 
-    $query = "INSERT INTO tours(name,description,places_covered,price,image)
+    $query = "INSERT INTO packages(name,description,places_covered,price,image)
                 VALUES('$name','$description','$places_covered','$price','$image')";
 
-    move_uploaded_file($_FILES['image']['tmp_name'], $target);
+    // move_uploaded_file($_FILES['image']['tmp_name'], $target);
 
     if ($conn->query($query)) {
-        echo '<script> alert("Tour added successfully"); </script>';
-        header('location:adminTours.php');
+        echo '<script> alert("package added successfully"); </script>';
+        header('location:adminPackages.php');
     } else {
         $msg = "$conn->error";
         echo $msg;
     }
 }
 
-if (isset($_POST['updateTours'])) {
+if (isset($_POST['updatePackages'])) {
     include "./DBConnect.php";
-    $tid = $_POST['tid'];
+    $pid = $_POST['pid'];
     $name = $_POST['name'];
     $description = $_POST['description'];
     $places_covered = $_POST['places_covered'];
     $price = $_POST['price'];
 
 
-    $query = "UPDATE tours SET name='$name', description='$description', places_covered='$places_covered', price='$price' WHERE t_id='$tid'";
+    $query = "UPDATE packages SET name='$name', description='$description', places_covered='$places_covered', price='$price' WHERE p_id='$pid'";
 
     if ($conn->query($query)) {
-        echo '<script> alert("Tour updated successfully"); </script>';
-        header('location:adminTours.php');
+        echo '<script> alert("Package updated successfully"); </script>';
+        header('location:adminPackages.php');
     } else {
         $msg = "$conn->error";
-        echo '<script> alert($msg); </script>';
+        echo $msg;
     }
 }
 
@@ -92,8 +92,8 @@ if (isset($_POST['updateTours'])) {
                 <div class="list-group list-group-flush bg-dark">
                     <h3 class="text-white text-center text-uppercase">Dashboard</h3>
                     <a href="adminDashboard.php" class="list-group-item list-group-item-action list-group-item-info">Users</a>
-                    <a href="adminTours.php" class="list-group-item list-group-item-action list-group-item-info active">Tours</a>
-                    <a href="adminPackages.php" class="list-group-item list-group-item-action list-group-item-info">Packages</a>
+                    <a href="adminTours.php" class="list-group-item list-group-item-action list-group-item-info">Tours</a>
+                    <a href="adminPackages.php" class="list-group-item list-group-item-action list-group-item-info active">Packages</a>
                     <a href="./adminProfile.php" class="list-group-item list-group-item-action list-group-item-info">Account</a>
                 </div>
             </div>
@@ -101,7 +101,7 @@ if (isset($_POST['updateTours'])) {
 
                 <div class="row">
                     <div class="col-md-2">
-                        <?php include "./partials/addTour.php" ?>
+                        <?php include "./partials/addPackages.php" ?>
                     </div>
                     <div class="col-md-4 offset-md-6">
                         <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
@@ -131,13 +131,13 @@ if (isset($_POST['updateTours'])) {
                                 include "./DBConnect.php";
                                 if (isset($_POST['submit'])) {
                                     $search =  $_POST['search'];
-                                    $q = "SELECT * FROM tours WHERE name LIKE ('%$search%')";
+                                    $q = "SELECT * FROM packages WHERE name LIKE ('%$search%')";
                                     $res = $conn->query($q);
                                     while ($row = $res->fetch_assoc()) {
                                         echo '<tr>';
 
                                         echo '<td>';
-                                        echo $row['t_id'];
+                                        echo $row['p_id'];
                                         echo '</td>';
 
                                         echo '<td>';
@@ -158,12 +158,12 @@ if (isset($_POST['updateTours'])) {
 
 
                                         echo '<td>';
-                                        include "./partials/editTour.php";
+                                        include "./partials/editPackage.php";
                                         echo '</td>';
 
                                         echo '<td>';
                                 ?>
-                                        <a href="./partials/deleteTour.php?delete=<?php echo $row['t_id']; ?>" class="btn btn-danger">
+                                        <a href="./partials/deletePackage.php?delete=<?php echo $row['p_id']; ?>" class="btn btn-danger">
                                             <i class="fas fa-trash"></i>
                                         </a>
                                     <?php
@@ -172,13 +172,13 @@ if (isset($_POST['updateTours'])) {
                                         echo '</tr>';
                                     }
                                 } else {
-                                    $q = "SELECT * FROM tours";
+                                    $q = "SELECT * FROM packages";
                                     $res = $conn->query($q);
                                     while ($row = $res->fetch_assoc()) {
                                         echo '<tr>';
 
                                         echo '<td>';
-                                        echo $row['t_id'];
+                                        echo $row['p_id'];
                                         echo '</td>';
 
                                         echo '<td>';
@@ -198,12 +198,12 @@ if (isset($_POST['updateTours'])) {
                                         echo '</td>';
 
                                         echo '<td>';
-                                        include "./partials/editTour.php";
+                                        include "./partials/editPackage.php";
                                         echo '</td>';
 
                                         echo '<td>';
                                     ?>
-                                        <a href="./partials/deleteTour.php?delete=<?php echo $row['t_id']; ?>" class="btn btn-danger">
+                                        <a href="./partials/deletePackage.php?delete=<?php echo $row['p_id']; ?>" class="btn btn-danger">
                                             <i class="fas fa-trash"></i>
                                         </a>
                                 <?php

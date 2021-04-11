@@ -43,5 +43,22 @@ $(document).ready(function () {
         modal.find('.modal-body #tid').val(tid)
         modal.find('.modal-body #places_covered').val(placesCovered)
     })
+    $('#editPackages').on('show.bs.modal', function (event) {
+
+        var button = $(event.relatedTarget)
+        var name = button.data('myname')
+        var description = button.data('mydescription')
+        var pid = button.data('myid')
+        var price = button.data('myprice')
+        var placesCovered = button.data('myplacescovered')
+
+        var modal = $(this)
+
+        modal.find('.modal-body #name').val(name)
+        modal.find('.modal-body #description').val(description)
+        modal.find('.modal-body #price').val(price)
+        modal.find('.modal-body #pid').val(pid)
+        modal.find('.modal-body #places_covered').val(placesCovered)
+    })
 
 });
