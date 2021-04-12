@@ -16,7 +16,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <img id="viewTourImg" class="w-100 mb-2 h-75" src="" alt="">
-                        <form action="" method="get">
+                        <form action="booking.php" method="post">
                             <input type="hidden" name="name" id="name">
                             <input type="hidden" name="tour_id" id="tid" value="">
                             <input type="hidden" name="price" id="price" value="">
