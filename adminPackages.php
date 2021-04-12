@@ -17,7 +17,7 @@ if (isset($_POST['addPackages'])) {
     $places_covered = $_POST['places_covered'];
     $price = $_POST['price'];
     $image = basename($_FILES["image"]["name"]);
-    $target = './images/package-images' . basename($_FILES['image']['name']);
+    $target = './images/package-images/' . basename($_FILES['image']['name']);
 
     $query = "INSERT INTO packages(name,description,places_covered,price,image)
                 VALUES('$name','$description','$places_covered','$price','$image')";

@@ -15,7 +15,7 @@
                     <div class="card-body">
                         <h5 class="card-title text-center"><?php echo $row['name'] ?></h5>
                         <p class="card-text text-justify"><?php echo $row['description'] ?></p>
-                        <button class="btn btn-success">View Tour</button>
+                        <?php include "./partials/viewTour.php";?>
                     </div>
                 </div>
             </div>

@@ -2,41 +2,22 @@
     <h1>Premium Packages</h1>
     <div class="border"></div>
     <div class="row">
-        <div class="col-md-3">
-            <div class="single-content">
-                <img src="images/package-images/img-1.jpg">
-                <div class="text-content">
-                    <h4>Bali Package</h4>
-                    <p><a class="btn btn-info">Know More</a></p>
+        <?php
+        include "./DBConnect.php";
+        $q = "SELECT * FROM packages";
+        $res = $conn->query($q);
+        while ($row = $res->fetch_assoc()) {
+        ?>
+            <div class="col-md-3">
+                <div class="single-content">
+                    <img src="images/package-images/<?php echo $row['image'] ?>">
+                    <div class="text-content">
+                        <h4><?php echo $row['name'] ?></h4>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-3">
-            <div class="single-content">
-                <img src="images/package-images/img-2.jpg">
-                <div class="text-content">
-                    <h4>Alps Package</h4>
-                    <p><a class="btn btn-info">Know More</a></p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="single-content">
-                <img src="images/package-images/img-3.jpg">
-                <div class="text-content">
-                    <h4>Sydney Package</h4>
-                    <p><a class="btn btn-info">Know More</a></p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="single-content">
-                <img src="images/package-images/img-4.jpg">
-                <div class="text-content">
-                    <h4>Singapoor Package</h4>
-                    <p><a class="btn btn-info">Know More</a></p>
-                </div>
-            </div>
-        </div>
+        <?php
+        }
+        ?>
     </div>
 </div>
