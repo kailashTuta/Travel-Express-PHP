@@ -33,6 +33,7 @@ if (isset($_POST["login"])) {
                 header("location:adminDashboard.php");
             } else {
                 $_SESSION['is_login'] = true;
+                $_SESSION['id'] = $row['id'];
                 $_SESSION['fname'] = $row['fname'];
                 $_SESSION['lname'] = $row['lname'];
                 $_SESSION['name'] = $row['name'];

@@ -45,15 +45,14 @@ if (isset($_SESSION['role'])) {
             <div class="col-md-2">
                 <div class="list-group list-group-flush bg-dark">
                     <h3 class="text-white text-center text-uppercase">Dashboard</h3>
-                    <a href="adminDashboard.php" class="list-group-item list-group-item-action list-group-item-info active">Users</a>
+                    <a href="adminDashboard.php" class="list-group-item list-group-item-action list-group-item-info">Users</a>
                     <a href="adminTours.php" class="list-group-item list-group-item-action list-group-item-info">Tours</a>
                     <a href="adminPackages.php" class="list-group-item list-group-item-action list-group-item-info">Packages</a>
-                    <a href="adminBooking.php" class="list-group-item list-group-item-action list-group-item-info">Bookings</a>
+                    <a href="adminBooking.php" class="list-group-item list-group-item-action list-group-item-info active">Bookings</a>
                     <a href="adminProfile.php" class="list-group-item list-group-item-action list-group-item-info">Account</a>
                 </div>
             </div>
             <div class="col-md-9">
-
                 <div class="row">
                     <div class="col-md-4 offset-md-8">
                         <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
@@ -66,7 +65,127 @@ if (isset($_SESSION['role'])) {
                         </form>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <tr class="bg-dark text-white">
+                                    <th>Booking Id</th>
+                                    <th>Tour Name</th>
+                                    <th>Persons</th>
+                                    <th>Mobile</th>
+                                    <th>Price</th>
+                                    <th>Journey Date</th>
+                                    <th>status</th>
+                                    <th>Trip Id</th>
+                                    <th>Package Id</th>
+                                    <th>User Id</th>
+                                </tr>
+                                <?php
+                                include "./DBConnect.php";
+                                if (isset($_POST['submit'])) {
+                                    $search =  $_POST['search'];
+                                    $q = "SELECT * FROM bookings WHERE user_id LIKE ('%$search%')";
+                                    $res = $conn->query($q);
+                                    while ($row = $res->fetch_assoc()) {
+                                        echo '<tr>';
 
+                                        echo '<td>';
+                                        echo $row['booking_id'];
+                                        echo '</td>';
+
+                                        echo '<td>';
+                                        echo $row['trip_name'];
+                                        echo '</td>';
+
+                                        echo '<td>';
+                                        echo $row['persons'];
+                                        echo '</td>';
+
+                                        echo '<td>';
+                                        echo $row['mobile'];
+                                        echo '</td>';
+
+                                        echo '<td>';
+                                        echo $row['price'];
+                                        echo '</td>';
+
+                                        echo '<td>';
+                                        echo $row['journey_date'];
+                                        echo '</td>';
+
+                                        echo '<td>';
+                                        echo $row['status'];
+                                        echo '</td>';
+
+                                        echo '<td>';
+                                        echo $row['trip_id'];
+                                        echo '</td>';
+
+                                        echo '<td>';
+                                        echo $row['package_id'];
+                                        echo '</td>';
+
+                                        echo '<td>';
+                                        echo $row['user_id'];
+                                        echo '</td>';
+
+                                        echo '</tr>';
+                                    }
+                                } else {
+                                    $q = "SELECT * FROM bookings";
+                                    $res = $conn->query($q);
+                                    while ($row = $res->fetch_assoc()) {
+                                        echo '<tr>';
+
+                                        echo '<td>';
+                                        echo $row['booking_id'];
+                                        echo '</td>';
+
+                                        echo '<td>';
+                                        echo $row['trip_name'];
+                                        echo '</td>';
+
+                                        echo '<td>';
+                                        echo $row['persons'];
+                                        echo '</td>';
+
+                                        echo '<td>';
+                                        echo $row['mobile'];
+                                        echo '</td>';
+
+                                        echo '<td>';
+                                        echo $row['price'];
+                                        echo '</td>';
+
+                                        echo '<td>';
+                                        echo $row['journey_date'];
+                                        echo '</td>';
+
+                                        echo '<td>';
+                                        echo $row['status'];
+                                        echo '</td>';
+
+                                        echo '<td>';
+                                        echo $row['trip_id'];
+                                        echo '</td>';
+
+                                        echo '<td>';
+                                        echo $row['package_id'];
+                                        echo '</td>';
+
+                                        echo '<td>';
+                                        echo $row['user_id'];
+                                        echo '</td>';
+
+                                        echo '</tr>';
+                                    }
+                                }
+                                ?>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
