@@ -9,6 +9,7 @@ if (isset($_SESSION['role'])) {
 } else {
     header("location:login.php");
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -80,6 +81,7 @@ if (isset($_SESSION['role'])) {
                                     <th>Trip Id</th>
                                     <th>Package Id</th>
                                     <th>User Id</th>
+                                    <th>Edit</th>
                                 </tr>
                                 <?php
                                 include "./DBConnect.php";
@@ -130,6 +132,10 @@ if (isset($_SESSION['role'])) {
                                         echo $row['user_id'];
                                         echo '</td>';
 
+                                        echo '<td>';
+                                        include "./partials/editBooking.php";
+                                        echo '</td>';
+
                                         echo '</tr>';
                                     }
                                 } else {
@@ -176,6 +182,10 @@ if (isset($_SESSION['role'])) {
 
                                         echo '<td>';
                                         echo $row['user_id'];
+                                        echo '</td>';
+
+                                        echo '<td>';
+                                        include "./partials/editBooking.php";
                                         echo '</td>';
 
                                         echo '</tr>';
