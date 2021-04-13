@@ -27,7 +27,7 @@ if ($conn->query($query)) {
     if ($_SESSION['role'] == 'admin') {
         header("location:adminBooking.php");
     } else {
-        header("location:userBooking.php");
+        header("location:userDashboard.php");
     }
 } else {
     echo $conn->error;

@@ -1,14 +1,61 @@
 <?php
 
+$msg = "";
 session_start();
 if (isset($_SESSION['role'])) {
-    if ($_SESSION['role'] != 'user') {
-        header("Location:adminDashboard.php");
+    if ($_SESSION['role'] != 'admin') {
+        header("Location:userDashboard.php");
     }
 } else {
     header("location:login.php");
 }
+
+if (isset($_POST['addUsers'])) {
+    include "./DBConnect.php";
+    $fname = $_POST['fname'];
+    $lname = $_POST['lname'];
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $role_as = $_POST['role_as'];
+    $password = $_POST['password'];
+
+    $query = "INSERT INTO users(fname,lname,name,email,role_as,password)
+                VALUES('$fname','$lname','$name','$email','$role_as','$password')";
+
+    if ($conn->query($query)) {
+        echo '<script> alert("User added successfully"); </script>';
+        header('location:adminDashboard.php');
+    } else {
+        $msg = "$conn->error";
+        echo '<script> alert($msg); </script>';
+    }
+}
+
+if (isset($_POST['updateUsers'])) {
+    include "./DBConnect.php";
+    $uid = $_POST['uid'];
+    $fname = $_POST['fname'];
+    $lname = $_POST['lname'];
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $role_as = $_POST['role_as'];
+    $password = $_POST['password'];
+
+    $query = "UPDATE users SET fname='$fname', lname='$lname', name='$name', email='$email', role_as='$role_as' WHERE id='$uid'";
+
+    if ($conn->query($query)) {
+        echo '<script> alert("User updated successfully"); </script>';
+        header('location:adminDashboard.php');
+    } else {
+        $msg = "$conn->error";
+        echo '<script> alert($msg); </script>';
+    }
+}
+
+
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,8 +90,12 @@ if (isset($_SESSION['role'])) {
             <div class="col-md-2">
                 <div class="list-group list-group-flush bg-dark">
                     <h3 class="text-white text-center text-uppercase">Dashboard</h3>
+                    <a href="adminDashboard.php" class="list-group-item list-group-item-action list-group-item-info">Users</a>
+                    <a href="adminTours.php" class="list-group-item list-group-item-action list-group-item-info">Tours</a>
+                    <a href="adminPackages.php" class="list-group-item list-group-item-action list-group-item-info">Packages</a>
+                    <a href="adminBooking.php" class="list-group-item list-group-item-action list-group-item-info">Bookings</a>
                     <a href="adminMyBooking.php" class="list-group-item list-group-item-action list-group-item-info active">My Bookings</a>
-                    <a href="userProfile.php" class="list-group-item list-group-item-action list-group-item-info">Account</a>
+                    <a href="adminProfile.php" class="list-group-item list-group-item-action list-group-item-info">Account</a>
                 </div>
             </div>
 

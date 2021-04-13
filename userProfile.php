@@ -1,7 +1,13 @@
 <?php
 
 session_start();
-
+if (isset($_SESSION['role'])) {
+    if ($_SESSION['role'] != 'user') {
+        header("Location:adminDashboard.php");
+    }
+} else {
+    header("location:login.php");
+}
 if (isset($_POST['update-info'])) {
     include "./DBConnect.php";
     $uid = $_POST['uid'];
@@ -15,21 +21,20 @@ if (isset($_POST['update-info'])) {
     $pincode = $_POST['pincode'];
     // $image = $_POST['image'];
     $email = $_POST['email'];
+    echo $email;
 
     $query = "UPDATE users SET fname='$fname', lname='$lname', name='$name', mobile = '$mobile', alternate_mobile='$alternate_mobile',
     address='$address', city='$city', pincode='$pincode' WHERE id='$uid'";
 
     if ($conn->query($query)) {
         echo '<script> alert("User updated successfully"); </script>';
-        header('location:adminProfile.php');
+        header('location:userProfile.php');
     } else {
         $msg = "$conn->error";
         echo '<script> alert($msg); </script>';
     }
 }
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -45,7 +50,6 @@ if (isset($_POST['update-info'])) {
 
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
-
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!-- CSS -->
@@ -65,14 +69,11 @@ if (isset($_POST['update-info'])) {
             <div class="col-md-2">
                 <div class="list-group list-group-flush bg-dark">
                     <h3 class="text-white text-center text-uppercase">Dashboard</h3>
-                    <a href="adminDashboard.php" class="list-group-item list-group-item-action list-group-item-info">Users</a>
-                    <a href="adminTours.php" class="list-group-item list-group-item-action list-group-item-info">Tours</a>
-                    <a href="adminPackages.php" class="list-group-item list-group-item-action list-group-item-info">Packages</a>
-                    <a href="adminBooking.php" class="list-group-item list-group-item-action list-group-item-info">Bookings</a>
                     <a href="adminMyBooking.php" class="list-group-item list-group-item-action list-group-item-info">My Bookings</a>
-                    <a href="adminProfile.php" class="list-group-item list-group-item-action list-group-item-info active">Account</a>
+                    <a href="userProfile.php" class="list-group-item list-group-item-action list-group-item-info active">Account</a>
                 </div>
             </div>
+
             <div class="col-md-9">
                 <div class="card">
                     <div class="card-body">
@@ -188,8 +189,6 @@ if (isset($_POST['update-info'])) {
         </div>
     </div>
     <?php include "./partials/footer.php" ?>
-
-
 </body>
 
 </html>
