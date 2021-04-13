@@ -94,7 +94,8 @@ if (isset($_POST['updateTours'])) {
                     <a href="adminDashboard.php" class="list-group-item list-group-item-action list-group-item-info">Users</a>
                     <a href="adminTours.php" class="list-group-item list-group-item-action list-group-item-info active">Tours</a>
                     <a href="adminPackages.php" class="list-group-item list-group-item-action list-group-item-info">Packages</a>
-                    <a href="./adminProfile.php" class="list-group-item list-group-item-action list-group-item-info">Account</a>
+                    <a href="adminBooking.php" class="list-group-item list-group-item-action list-group-item-info">Bookings</a>
+                    <a href="adminProfile.php" class="list-group-item list-group-item-action list-group-item-info">Account</a>
                 </div>
             </div>
             <div class="col-md-9">
