@@ -19,11 +19,18 @@ if (isset($_POST['update-info'])) {
     $address = $_POST['address'];
     $city = $_POST['city'];
     $pincode = $_POST['pincode'];
-    // $image = $_POST['image'];
     $email = $_POST['email'];
+    $image = basename($_FILES["image"]["name"]);
+    $target = './images/uploads/' . basename($_FILES['image']['name']);
 
-    $query = "UPDATE users SET fname='$fname', lname='$lname', name='$name', mobile = '$mobile', alternate_mobile='$alternate_mobile',
+    if ($_FILES['image']['tmp_name'] != "") {
+        move_uploaded_file($_FILES['image']['tmp_name'], $target);
+        $query = "UPDATE users SET fname='$fname', lname='$lname', name='$name', mobile = '$mobile', alternate_mobile='$alternate_mobile',
+    address='$address', city='$city', pincode='$pincode', image='$image' WHERE id='$uid'";
+    } else {
+        $query = "UPDATE users SET fname='$fname', lname='$lname', name='$name', mobile = '$mobile', alternate_mobile='$alternate_mobile',
     address='$address', city='$city', pincode='$pincode' WHERE id='$uid'";
+    }
 
     if ($conn->query($query)) {
         echo '<script> alert("User updated successfully"); </script>';
@@ -96,7 +103,7 @@ if (isset($_POST['update-info'])) {
                                     <div class="col-md-3">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <img src=".<?php echo $row['image']; ?>" class="w-50 ml-5" alt="profile-image">
+                                                <img src="./images/uploads/<?php echo $row['image']; ?>" class="w-50 ml-5" alt="profile-image">
                                             </div>
                                         </div>
                                         <div class="row">

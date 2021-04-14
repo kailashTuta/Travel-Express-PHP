@@ -22,7 +22,7 @@ if (isset($_POST['addTours'])) {
     $query = "INSERT INTO tours(name,description,places_covered,price,image)
                 VALUES('$name','$description','$places_covered','$price','$image')";
 
-    // move_uploaded_file($_FILES['image']['tmp_name'], $target);
+    move_uploaded_file($_FILES['image']['tmp_name'], $target);
 
     if ($conn->query($query)) {
         echo '<script> alert("Tour added successfully"); </script>';

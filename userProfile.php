@@ -61,32 +61,81 @@ if (isset($_SESSION['role'])) {
                         <div class="card-body">
                             <h3 class="card-title text-center text-uppercase text-white bg-dark p-3">My Profile Page</h3>
                             <div class="row">
+
                                 <div class="col-md-3">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <img src=".<?php echo $row['image']; ?>" class="w-50 ml-5" alt="profile-image" readonly>
+                                            <img src="./images/uploads/<?php echo $row['image']; ?>" class="w-50 ml-5" alt="profile-image" readonly>
                                         </div>
                                     </div>
+                                    <?php
+                                    include "./DBConnect.php";
+                                    if (isset($_POST['upload'])) {
+                                        $uid = $_POST['uid'];
+                                        $fname = $_POST['fname'];
+                                        $lname = $_POST['lname'];
+                                        $name = $_POST['name'];
+                                        $mobile = $_POST['mobile'];
+                                        $alternate_mobile = $_POST['alternate_mobile'];
+                                        $address = $_POST['address'];
+                                        $city = $_POST['city'];
+                                        $pincode = $_POST['pincode'];
+                                        $email = $_POST['email'];
+                                        $image = basename($_FILES["image"]["name"]);
+                                        $target = './images/uploads/' . basename($_FILES['image']['name']);
+                                        move_uploaded_file($_FILES['image']['tmp_name'], $target);
+
+                                        if ($_FILES['image']['tmp_name'] != "") {
+                                            move_uploaded_file($_FILES['image']['tmp_name'], $target);
+                                            $query = "UPDATE users SET fname='$fname', lname='$lname', name='$name', mobile = '$mobile', alternate_mobile='$alternate_mobile',
+                                            address='$address', city='$city', pincode='$pincode', image='$image' WHERE id='$uid'";
+                                        } else {
+                                            $query = "UPDATE users SET fname='$fname', lname='$lname', name='$name', mobile = '$mobile', alternate_mobile='$alternate_mobile',
+                                            address='$address', city='$city', pincode='$pincode' WHERE id='$uid'";
+                                        }
+                                        if ($conn->query($query)) {
+                                            // header('location:userProfile.php');
+                                        } else {
+                                            $msg = "$conn->error";
+                                            echo '<script> alert($msg); </script>';
+                                        }
+                                    }
+                                    ?>
+                                    <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="file-upload p-2">
+                                                    <input type="file" name="image">
+                                                    <span>
+                                                        <span class="material-icons">
+                                                            add_photo_alternate
+                                                        </span>
+                                                        Choose a Image
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </div>
                                 </div>
+
                                 <div class="col-md-9">
                                     <div class="row">
                                         <div class="col-md-4">
                                             <input type="hidden" name="uid" Value="<?php echo $row['id'] ?>">
                                             <div class="form-group">
                                                 <label for="">First Name</label>
-                                                <input type="text" name="fname" class="form-control" value="<?php echo $row['fname']; ?>" readonly>
+                                                <input type="text" name="fname" class="form-control" value="<?php echo $row['fname']; ?>">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="">Last Name</label>
-                                                <input type="text" name="lname" class="form-control" value="<?php echo $row['lname']; ?>" readonly>
+                                                <input type="text" name="lname" class="form-control" value="<?php echo $row['lname']; ?>">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="">Username</label>
-                                                <input type="text" name="name" class="form-control" value="<?php echo $row['name']; ?>" readonly>
+                                                <input type="text" name="name" class="form-control" value="<?php echo $row['name']; ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -95,19 +144,19 @@ if (isset($_SESSION['role'])) {
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="">Gender</label>
-                                                <input name="gender" type="text" class="form-control" value="<?php echo $row['gender']; ?>" readonly>
+                                                <input name="gender" type="text" class="form-control" value="<?php echo $row['gender']; ?>">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="">Mobile</label>
-                                                <input type="number" name="mobile" class="form-control" value="<?php echo $row['mobile']; ?>" readonly>
+                                                <input type="number" name="mobile" class="form-control" value="<?php echo $row['mobile']; ?>">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="">Alternate Mobile (Optional)</label>
-                                                <input type="number" name="alternate_mobile" class="form-control" value="<?php echo $row['alternate_mobile']; ?>" readonly>
+                                                <input type="number" name="alternate_mobile" class="form-control" value="<?php echo $row['alternate_mobile']; ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -124,22 +173,24 @@ if (isset($_SESSION['role'])) {
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="">Address</label>
-                                        <input type="text" name="address" class="form-control" value="<?php echo $row['address']; ?>" readonly>
+                                        <input type="text" name="address" class="form-control" value="<?php echo $row['address']; ?>">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="">City</label>
-                                        <input type="text" name="city" class="form-control" value="<?php echo $row['city']; ?>" readonly>
+                                        <input type="text" name="city" class="form-control" value="<?php echo $row['city']; ?>">
                                     </div>
                                 </div>
                                 <div class=" col-md-3">
                                     <div class="form-group">
                                         <label for="">Pincode</label>
-                                        <input type="number" name="pincode" class="form-control" value="<?php echo $row['pincode']; ?>" readonly>
+                                        <input type="number" name="pincode" class="form-control" value="<?php echo $row['pincode']; ?>">
                                     </div>
                                 </div>
                             </div>
+                            <input type="submit" name="upload" class="btn btn-info btn-block" value="Update Profile">
+                            </form>
                         </div>
                     </div>
                 <?php
