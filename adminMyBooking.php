@@ -107,7 +107,7 @@ if (isset($_POST['updateUsers'])) {
                 $res = $conn->query($q);
                 while ($row = $res->fetch_assoc()) {
                 ?>
-                    <div class="card text-white" style="width: 25rem;" id="<?php echo $row['status']; ?>">
+                    <div class="card text-white <?php echo $row['status']; ?> mb-2" style="width: 25rem;" id="">
                         <div class="card-body">
                             <h4 class="card-title">
                                 <span class="material-icons">
