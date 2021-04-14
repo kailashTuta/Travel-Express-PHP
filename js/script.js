@@ -128,7 +128,7 @@ $(document).ready(function () {
     })
 
     // Adding classes to my booking
-    $("#confirmed").addClass("bg-success");
-    $("#pending").addClass("bg-warning");
-    $("#cancelled").addClass("bg-danger");
+    $("div.confirmed").addClass("bg-success");
+    $("div.pending").addClass("bg-warning");
+    $("div.cancelled").addClass("bg-danger");
 });

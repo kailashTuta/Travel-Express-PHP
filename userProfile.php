@@ -7,9 +7,23 @@ if (isset($_SESSION['role'])) {
 } else {
     header("location:login.php");
 }
-
+if (isset($_POST['upload'])) {
+    include "./DBConnect.php";
+    $uid = $_SESSION['id'];
+    $image = basename($_FILES["image"]["name"]);
+    $target = './images/uploads/' . basename($_FILES['image']['name']);
+    if ($_FILES['image']['tmp_name'] != "") {
+        move_uploaded_file($_FILES['image']['tmp_name'], $target);
+        $query = "UPDATE users SET image='$image' WHERE id='$uid'";
+        if ($conn->query($query)) {
+            header('location:userProfile.php');
+        } else {
+            $msg = "$conn->error";
+            echo '<script> alert($msg); </script>';
+        }
+    }
+}
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -68,25 +82,6 @@ if (isset($_SESSION['role'])) {
                                             <img src="./images/uploads/<?php echo $row['image']; ?>" class="w-50 ml-5" alt="profile-image" readonly>
                                         </div>
                                     </div>
-                                    <?php
-                                    include "./DBConnect.php";
-                                    if (isset($_POST['upload'])) {
-                                        $uid = $_SESSION['id'];
-                                        $image = basename($_FILES["image"]["name"]);
-                                        $target = './images/uploads/' . basename($_FILES['image']['name']);
-
-                                        if ($_FILES['image']['tmp_name'] != "") {
-                                            move_uploaded_file($_FILES['image']['tmp_name'], $target);
-                                            $query = "UPDATE users SET image='$image' WHERE id='$uid'";
-                                            if ($conn->query($query)) {
-                                                // header('location:userProfile.php');
-                                            } else {
-                                                $msg = "$conn->error";
-                                                echo '<script> alert($msg); </script>';
-                                            }
-                                        }
-                                    }
-                                    ?>
                                     <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data">
                                         <div class="row">
                                             <div class="col-md-12">

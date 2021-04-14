@@ -40,9 +40,7 @@ if (isset($_POST['update-info'])) {
         echo '<script> alert($msg); </script>';
     }
 }
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
