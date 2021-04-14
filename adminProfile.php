@@ -1,6 +1,12 @@
 <?php
-
 session_start();
+if (isset($_SESSION['role'])) {
+    if ($_SESSION['role'] != 'admin') {
+        header("Location:userDashboard.php");
+    }
+} else {
+    header("location:login.php");
+}
 
 if (isset($_POST['update-info'])) {
     include "./DBConnect.php";
@@ -74,116 +80,126 @@ if (isset($_POST['update-info'])) {
                 </div>
             </div>
             <div class="col-md-9">
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="card-title text-center text-uppercase text-white bg-dark p-3">My Profile Page</h3>
+                <?php
+                include "./DBConnect.php";
+                $uid = $_SESSION['id'];
+                $q = "SELECT * from users where id='$uid'";
+                $res = $conn->query($q);
+                while ($row = $res->fetch_assoc()) {
+                ?>
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title text-center text-uppercase text-white bg-dark p-3">My Profile Page</h3>
 
-                        <form action="<?= $_SERVER['PHP_SELF'] ?>" method="POST" enctype="multipart/form-data">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <img src=".<?php echo $_SESSION['image']; ?>" class="w-50 ml-5" alt="profile-image">
+                            <form action="<?= $_SERVER['PHP_SELF'] ?>" method="POST" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <img src=".<?php echo $row['image']; ?>" class="w-50 ml-5" alt="profile-image">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <label class="file-upload p-2">
-                                                <input type="file" name="image">
-                                                <span>
-                                                    <span class="material-icons">
-                                                        add_photo_alternate
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="file-upload p-2">
+                                                    <input type="file" name="image">
+                                                    <span>
+                                                        <span class="material-icons">
+                                                            add_photo_alternate
+                                                        </span>
+                                                        Choose a Image
                                                     </span>
-                                                    Choose a Image
-                                                </span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-9">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <input type="hidden" name="uid" Value="<?php echo $_SESSION['id'] ?>">
-                                            <div class="form-group">
-                                                <label for="">First Name</label>
-                                                <input type="text" name="fname" class="form-control" value="<?php echo $_SESSION['fname']; ?>">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="">Last Name</label>
-                                                <input type="text" name="lname" class="form-control" value="<?php echo $_SESSION['lname']; ?>">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="">Username</label>
-                                                <input type="text" name="name" class="form-control" value="<?php echo $_SESSION['name']; ?>">
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-9">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <input type="hidden" name="uid" Value="<?php echo $row['id'] ?>">
+                                                <div class="form-group">
+                                                    <label for="">First Name</label>
+                                                    <input type="text" name="fname" class="form-control" value="<?php echo $row['fname']; ?>">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="">Last Name</label>
+                                                    <input type="text" name="lname" class="form-control" value="<?php echo $row['lname']; ?>">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="">Username</label>
+                                                    <input type="text" name="name" class="form-control" value="<?php echo $row['name']; ?>">
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                    <div class=" row">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="">Gender</label>
-                                                <input name="gender" type="text" class="form-control" value="<?php echo $_SESSION['gender']; ?>">
+                                        <div class=" row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="">Gender</label>
+                                                    <input name="gender" type="text" class="form-control" value="<?php echo $row['gender']; ?>">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="">Mobile</label>
+                                                    <input type="number" name="mobile" class="form-control" value="<?php echo $row['mobile']; ?>">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="">Alternate Mobile (Optional)</label>
+                                                    <input type="number" name="alternate_mobile" class="form-control" value="<?php echo $row['alternate_mobile']; ?>">
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="">Mobile</label>
-                                                <input type="number" name="mobile" class="form-control" value="<?php echo $_SESSION['mobile']; ?>">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="">Alternate Mobile (Optional)</label>
-                                                <input type="number" name="alternate_mobile" class="form-control" value="<?php echo $_SESSION['alternate_mobile']; ?>">
-                                            </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="">Email Id</label>
+                                            <input type="email" name="email" class="form-control" readonly value="<?php echo $row['email']; ?>">
                                         </div>
                                     </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="">Address</label>
+                                            <input type="text" name="address" class="form-control" value="<?php echo $row['address']; ?>">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="">City</label>
+                                            <input type="text" name="city" class="form-control" value="<?php echo $row['city']; ?>">
+                                        </div>
+                                    </div>
+                                    <div class=" col-md-3">
+                                        <div class="form-group">
+                                            <label for="">Pincode</label>
+                                            <input type="number" name="pincode" class="form-control" value="<?php echo $row['pincode']; ?>">
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="">Email Id</label>
-                                        <input type="email" name="email" class="form-control" readonly value="<?php echo $_SESSION['User']; ?>">
+                                <div class="row">
+                                    <div class="offset-md-10 col-md-2">
+                                        <div class="form-group">
+                                            <button type="submit" name="update-info" class="btn btn-info">Update Profile</button>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="">Address</label>
-                                        <input type="text" name="address" class="form-control" value="<?php echo $_SESSION['address']; ?>">
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="">City</label>
-                                        <input type="text" name="city" class="form-control" value="<?php echo $_SESSION['city']; ?>">
-                                    </div>
-                                </div>
-                                <div class=" col-md-3">
-                                    <div class="form-group">
-                                        <label for="">Pincode</label>
-                                        <input type="number" name="pincode" class="form-control" value="<?php echo $_SESSION['pincode']; ?>">
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="offset-md-10 col-md-2">
-                                    <div class="form-group">
-                                        <button type="submit" name="update-info" class="btn btn-info">Update Profile</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </form>
+                            </form>
+                        </div>
                     </div>
-                </div>
+                <?php
+                }
+                ?>
             </div>
         </div>
     </div>

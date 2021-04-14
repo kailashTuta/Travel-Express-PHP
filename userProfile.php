@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 if (isset($_SESSION['role'])) {
     if ($_SESSION['role'] != 'user') {
@@ -8,33 +7,9 @@ if (isset($_SESSION['role'])) {
 } else {
     header("location:login.php");
 }
-if (isset($_POST['update-info'])) {
-    include "./DBConnect.php";
-    $uid = $_POST['uid'];
-    $fname = $_POST['fname'];
-    $lname = $_POST['lname'];
-    $name = $_POST['name'];
-    $mobile = $_POST['mobile'];
-    $alternate_mobile = $_POST['alternate_mobile'];
-    $address = $_POST['address'];
-    $city = $_POST['city'];
-    $pincode = $_POST['pincode'];
-    // $image = $_POST['image'];
-    $email = $_POST['email'];
-    echo $email;
 
-    $query = "UPDATE users SET fname='$fname', lname='$lname', name='$name', mobile = '$mobile', alternate_mobile='$alternate_mobile',
-    address='$address', city='$city', pincode='$pincode' WHERE id='$uid'";
-
-    if ($conn->query($query)) {
-        echo '<script> alert("User updated successfully"); </script>';
-        header('location:userProfile.php');
-    } else {
-        $msg = "$conn->error";
-        echo '<script> alert($msg); </script>';
-    }
-}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -50,6 +25,7 @@ if (isset($_POST['update-info'])) {
 
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!-- CSS -->
@@ -69,57 +45,48 @@ if (isset($_POST['update-info'])) {
             <div class="col-md-2">
                 <div class="list-group list-group-flush bg-dark">
                     <h3 class="text-white text-center text-uppercase">Dashboard</h3>
-                    <a href="adminMyBooking.php" class="list-group-item list-group-item-action list-group-item-info">My Bookings</a>
+                    <a href="userDashboard.php" class="list-group-item list-group-item-action list-group-item-info">My Bookings</a>
                     <a href="userProfile.php" class="list-group-item list-group-item-action list-group-item-info active">Account</a>
                 </div>
             </div>
-
             <div class="col-md-9">
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="card-title text-center text-uppercase text-white bg-dark p-3">My Profile Page</h3>
-
-                        <form action="<?= $_SERVER['PHP_SELF'] ?>" method="POST" enctype="multipart/form-data">
+                <?php
+                include "./DBConnect.php";
+                $uid = $_SESSION['id'];
+                $q = "SELECT * from users where id='$uid'";
+                $res = $conn->query($q);
+                while ($row = $res->fetch_assoc()) {
+                ?>
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title text-center text-uppercase text-white bg-dark p-3">My Profile Page</h3>
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <img src=".<?php echo $_SESSION['image']; ?>" class="w-50 ml-5" alt="profile-image">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <label class="file-upload p-2">
-                                                <input type="file" name="image">
-                                                <span>
-                                                    <span class="material-icons">
-                                                        add_photo_alternate
-                                                    </span>
-                                                    Choose a Image
-                                                </span>
-                                            </label>
+                                            <img src=".<?php echo $row['image']; ?>" class="w-50 ml-5" alt="profile-image" readonly>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-9">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <input type="hidden" name="uid" Value="<?php echo $_SESSION['id'] ?>">
+                                            <input type="hidden" name="uid" Value="<?php echo $row['id'] ?>">
                                             <div class="form-group">
                                                 <label for="">First Name</label>
-                                                <input type="text" name="fname" class="form-control" value="<?php echo $_SESSION['fname']; ?>">
+                                                <input type="text" name="fname" class="form-control" value="<?php echo $row['fname']; ?>" readonly>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="">Last Name</label>
-                                                <input type="text" name="lname" class="form-control" value="<?php echo $_SESSION['lname']; ?>">
+                                                <input type="text" name="lname" class="form-control" value="<?php echo $row['lname']; ?>" readonly>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="">Username</label>
-                                                <input type="text" name="name" class="form-control" value="<?php echo $_SESSION['name']; ?>">
+                                                <input type="text" name="name" class="form-control" value="<?php echo $row['name']; ?>" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -128,19 +95,19 @@ if (isset($_POST['update-info'])) {
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="">Gender</label>
-                                                <input name="gender" type="text" class="form-control" value="<?php echo $_SESSION['gender']; ?>">
+                                                <input name="gender" type="text" class="form-control" value="<?php echo $row['gender']; ?>" readonly>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="">Mobile</label>
-                                                <input type="number" name="mobile" class="form-control" value="<?php echo $_SESSION['mobile']; ?>">
+                                                <input type="number" name="mobile" class="form-control" value="<?php echo $row['mobile']; ?>" readonly>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="">Alternate Mobile (Optional)</label>
-                                                <input type="number" name="alternate_mobile" class="form-control" value="<?php echo $_SESSION['alternate_mobile']; ?>">
+                                                <input type="number" name="alternate_mobile" class="form-control" value="<?php echo $row['alternate_mobile']; ?>" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -151,44 +118,39 @@ if (isset($_POST['update-info'])) {
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="">Email Id</label>
-                                        <input type="email" name="email" class="form-control" readonly value="<?php echo $_SESSION['User']; ?>">
+                                        <input type="email" name="email" class="form-control" readonly value="<?php echo $row['email']; ?>" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="">Address</label>
-                                        <input type="text" name="address" class="form-control" value="<?php echo $_SESSION['address']; ?>">
+                                        <input type="text" name="address" class="form-control" value="<?php echo $row['address']; ?>" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="">City</label>
-                                        <input type="text" name="city" class="form-control" value="<?php echo $_SESSION['city']; ?>">
+                                        <input type="text" name="city" class="form-control" value="<?php echo $row['city']; ?>" readonly>
                                     </div>
                                 </div>
                                 <div class=" col-md-3">
                                     <div class="form-group">
                                         <label for="">Pincode</label>
-                                        <input type="number" name="pincode" class="form-control" value="<?php echo $_SESSION['pincode']; ?>">
+                                        <input type="number" name="pincode" class="form-control" value="<?php echo $row['pincode']; ?>" readonly>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="row">
-                                <div class="offset-md-10 col-md-2">
-                                    <div class="form-group">
-                                        <button type="submit" name="update-info" class="btn btn-info">Update Profile</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </form>
+                        </div>
                     </div>
-                </div>
+                <?php
+                }
+                ?>
             </div>
         </div>
     </div>
     <?php include "./partials/footer.php" ?>
+
+
 </body>
 
 </html>
