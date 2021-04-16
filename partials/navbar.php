@@ -35,6 +35,9 @@ if (isset($_SESSION['is_login'])) {
                     if ($_SESSION['role'] == 'admin') {
                     ?>
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" data-target="dropdown_target" href="#">
+                            <span class="material-icons">
+                                account_circle
+                            </span>
                             <?php echo $_SESSION['name'] ?><span class="material-icons">expand_more</span>
                         </a>
 
@@ -47,6 +50,9 @@ if (isset($_SESSION['is_login'])) {
                     } else {
                     ?>
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" data-target="dropdown_target" href="#">
+                            <span class="material-icons">
+                                account_circle
+                            </span>
                             <?php echo $_SESSION['name'] ?><span class="material-icons">expand_more</span>
                         </a>
 

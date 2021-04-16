@@ -78,6 +78,10 @@ if (isset($_POST["login"])) {
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600&family=DM+Sans&family=Karantina:wght@300&family=Libre+Baskerville&family=Lobster&family=Mulish:wght@500&family=Open+Sans&family=Pacifico&family=Patua+One&family=Roboto+Slab:wght@300&display=swap" rel="stylesheet">
+
     <!-- JavaScript -->
     <script src="./js/script.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
@@ -105,7 +109,8 @@ if (isset($_POST["login"])) {
                         </div>
 
                         <h5 class="text-center text-danger"><?= $message; ?></h5>
-                        <button type="submit" name="login" class="btn btn-info btn-block">Login</button>
+                        <button type="submit" name="login" class="btn btn-info btn-block mb-1">Login</button>
+                        <span class="mt-1">Not a User? <a href="register.php">Register</a></span>
                     </form>
                 </section>
             </section>

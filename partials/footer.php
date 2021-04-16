@@ -30,8 +30,7 @@
                 <ul class="list-unstyled">
                     <li class="my-2"><a class="text-white" href="index.php">Home</a></li>
                     <li class="my-2"><a class="text-white" href="gallery.php">Gallery</a></li>
-                    <li class="my-2"><a class="text-white" href="#premiumPackage">Premium Packages</a></li>
-                    <li class="my-2"><a class="text-white" href="#testimonials">Testimonials</a></li>
+                    <li class="my-2"><a class="text-white" href="tours.php">Tours & Packages</a></li>
                 </ul>
             </div>
 
