@@ -33,22 +33,23 @@ if (isset($_POST['addUsers'])) {
 
 if (isset($_POST['updateUsers'])) {
     include "./DBConnect.php";
+
     $uid = $_POST['uid'];
     $fname = $_POST['fname'];
     $lname = $_POST['lname'];
     $name = $_POST['name'];
     $email = $_POST['email'];
     $role_as = $_POST['role_as'];
-    $password = $_POST['password'];
+    $password = isset($_POST['password']) ? $_POST['password'] : null;
 
     $query = "UPDATE users SET fname='$fname', lname='$lname', name='$name', email='$email', role_as='$role_as' WHERE id='$uid'";
 
     if ($conn->query($query)) {
-        echo '<script> alert("User updated successfully"); </script>';
         header('location:adminDashboard.php');
+        exit();
     } else {
         $msg = "$conn->error";
-        echo '<script> alert($msg); </script>';
+        echo '<script> alert("$msg"); </script>';
     }
 }
 
